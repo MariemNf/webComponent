@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app version="3.0" xmlns="http://java.sun.com/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd">
+    <servlet>
+        <servlet-name>Oracle</servlet-name>
+        <servlet-class>com.tmi.Servlet1</servlet-class>
+        <init-param>
+            <param-name>config1</param-name>
+            <param-value>Connect to Oracle</param-value>
+        </init-param>
+    </servlet>
+    <servlet>
+        <servlet-name>MySQL</servlet-name>
+        <servlet-class>com.tmi.Servlet1</servlet-class>
+        <init-param>
+            <param-name>config1</param-name>
+            <param-value>Connect to MySQL</param-value>
+        </init-param>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>Oracle</servlet-name>
+        <url-pattern>/oracle</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>MySQL</servlet-name>
+        <url-pattern>/mysql</url-pattern>
+    </servlet-mapping>
+</web-app>
