@@ -6,9 +6,12 @@
 
 package com.tmi;
 
+import com.tmi.ejb.MySessionBean;
 import java.io.IOException;
 import java.io.PrintWriter;
-import javax.servlet.ServletConfig;
+import javax.annotation.PostConstruct;
+import javax.annotation.PreDestroy;
+import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -21,6 +24,9 @@ import javax.servlet.http.HttpServletResponse;
  */
 @WebServlet(name = "S1", urlPatterns = {"/S1"})
 public class S1 extends HttpServlet {
+    
+    @EJB
+    MySessionBean myBean;
 
     @Override
     public void init() throws ServletException {
@@ -34,6 +40,16 @@ public class S1 extends HttpServlet {
 
     public S1() {
         System.out.println("Servlet instantiated !!");
+    }
+    
+    @PostConstruct
+    public void postConstruct() {
+        System.out.println("Call before init !!");
+    }
+    
+    @PreDestroy
+    public void preDestroy() {
+        System.out.println("Call after destroy !!");
     }
 
     /**
@@ -49,6 +65,7 @@ public class S1 extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
+        
         try {
             /* TODO output your page here. You may use following sample code. */
             out.println("<!DOCTYPE html>");
@@ -58,6 +75,7 @@ public class S1 extends HttpServlet {
             out.println("</head>");
             out.println("<body>");
             out.println("<h1>Servlet S1 at " + request.getContextPath() + "</h1>");
+            out.println("Call sayHello() from MySessionBean "+ myBean.sayHello());
             out.println("</body>");
             out.println("</html>");
         } finally {
