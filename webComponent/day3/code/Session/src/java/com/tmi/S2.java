@@ -4,23 +4,23 @@
  * and open the template in the editor.
  */
 
-package com.tmi.case1;
+package com.tmi;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
  * @author postre A3
  */
-@WebServlet(name = "s1", urlPatterns = {"/s1"})
-public class s1 extends HttpServlet {
+@WebServlet(name = "S2", urlPatterns = {"/S2"})
+public class S2 extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -35,22 +35,23 @@ public class s1 extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
-        RequestDispatcher requestDispatcher = request.getRequestDispatcher("/s2");
-        //requestDispatcher.forward(request, response);
-
+        HttpSession session = request.getSession(false);
+        
+        String atr_tmi = session.getAttribute("TMI") != null ? (String) session.getAttribute("TMI") : "session not created";
+             
         try {
             /* TODO output your page here. You may use following sample code. */
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet s1</title>");            
+            out.println("<title>Servlet S2</title>");            
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet s1 at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet S2 at " + request.getContextPath() + "</h1>");
+            out.println("Session TMI attribute " + atr_tmi);
+            session.getAttribute("TMI");
             out.println("</body>");
             out.println("</html>");
-            requestDispatcher.include(request, response);
-           
         } finally {
             out.close();
         }

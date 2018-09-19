@@ -4,23 +4,23 @@
  * and open the template in the editor.
  */
 
-package com.tmi.case1;
+package com.tmi;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
  * @author postre A3
  */
-@WebServlet(name = "s1", urlPatterns = {"/s1"})
-public class s1 extends HttpServlet {
+@WebServlet(name = "S3", urlPatterns = {"/S3"})
+public class S3 extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -35,25 +35,15 @@ public class s1 extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
-        RequestDispatcher requestDispatcher = request.getRequestDispatcher("/s2");
-        //requestDispatcher.forward(request, response);
-
-        try {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet s1</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet s1 at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
-            requestDispatcher.include(request, response);
-           
-        } finally {
-            out.close();
+        
+        HttpSession session = request.getSession(false);
+        
+        if(session != null) {
+            session.invalidate();
         }
+        
+        response.sendRedirect("/Cookie/login.html");
+
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

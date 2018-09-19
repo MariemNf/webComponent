@@ -3,24 +3,22 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
-package com.tmi.case1;
+package com.tmi;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
  * @author postre A3
  */
-@WebServlet(name = "s1", urlPatterns = {"/s1"})
-public class s1 extends HttpServlet {
+public class S2 extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -35,22 +33,45 @@ public class s1 extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
-        RequestDispatcher requestDispatcher = request.getRequestDispatcher("/s2");
-        //requestDispatcher.forward(request, response);
+
+        HttpSession session = request.getSession();
+        String login = request.getParameter("login");
+
+        session.setMaxInactiveInterval(60);
+
+        Cookie cookie1 = new Cookie("cookie1", "va1");
+        response.addCookie(cookie1);
+
+        Cookie[] cookies = request.getCookies();
 
         try {
             /* TODO output your page here. You may use following sample code. */
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet s1</title>");            
+            out.println("<title>Servlet S2</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet s1 at " + request.getContextPath() + "</h1>");
+            if (login != null) {
+                out.println("<h1>Hello <strong>" + login + "</strong> :) </h1>");
+                out.println("<form action='S3'>\n"
+                        + "  <button>logout</button>\n"
+                        + "</form>");
+                
+                out.println("<h1>//------------- Cookies -------------//</h1>");
+
+                for (int i = 0; i < cookies.length; i++) {
+                    out.println(cookies[i].getName() + " :: ");
+                    out.println(cookies[i].getValue() + "<br />");
+                }
+
+                out.println("<h1>//------------- Cookies -------------//</h1>");
+            } else {
+                response.sendRedirect("/Cookie/login.html");
+            }
+
             out.println("</body>");
             out.println("</html>");
-            requestDispatcher.include(request, response);
-           
         } finally {
             out.close();
         }
