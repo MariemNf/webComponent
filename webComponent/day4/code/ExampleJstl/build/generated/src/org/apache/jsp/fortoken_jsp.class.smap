@@ -1,0 +1,15 @@
+SMAP
+fortoken_jsp.java
+JSP
+*S JSP
+*F
++ 0 fortoken.jsp
+fortoken.jsp
+*L
+1,7:57
+7:86,12
+8:98
+8:126,5
+8,2:101
+9,4:65
+*E
